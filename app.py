@@ -79,11 +79,14 @@ def signup():
     and re-present form.
     """
 
+    print("*** SIGNUP")
+
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
     form = UserAddForm()
 
     if form.validate_on_submit():
+        print("*** VALIDATE")
         try:
             user = User.signup(
                 username=form.username.data,
@@ -98,10 +101,12 @@ def signup():
             return render_template('users/signup.html', form=form)
 
         do_login(user)
+        print("*** REDIRECT")
 
         return redirect("/")
 
     else:
+        print("*** ERRORS", form.errors)
         return render_template('users/signup.html', form=form)
 
 
